@@ -1,0 +1,25 @@
+# Late verification checks, run while proofing the guide text.
+
+$ keepassxc-cli (no DISPLAY) --version on the GUI binary:
+qt.qpa.xcb: could not connect to display 
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+
+$ keepassxc-cli --version
+2.7.6
+
+$ keepassxc-cli db-create --help | grep -B1 -A1 decryption
+  -p, --set-password            Set a password for the database.
+  -t, --decryption-time <time>  Target decryption time in MS for the database.
+  -h, --help                    Display this help.
+
+$ keepassxc-cli edit --help | grep generate
+  -g, --generate                 Generate a password for the entry.
+  -L, --length <length>          Length of the generated password
+
+# Bare export defaults to XML:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+# Adding an entry under a group that does not exist:
+Could not create entry with path NoSuchGroup/Ghost.

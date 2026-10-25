@@ -1,0 +1,9 @@
+# Controlled check: does a CLI merge change the format version of the target?
+$ versions before merge:
+a.kdbx: bytes 8-11: 01 00 03 00
+b.kdbx: bytes 8-11: 01 00 03 00
+Enter password to unlock a.kdbx: 
+	Creating missing B Entry [5597e9e1f4a54c9bbcc36e21c8e97ed3]
+Successfully merged b.kdbx into a.kdbx.
+$ version of a.kdbx after merge:
+a.kdbx: bytes 8-11: 01 00 03 00

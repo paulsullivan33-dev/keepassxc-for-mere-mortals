@@ -1,0 +1,36 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ printf "%s\n%s\n" "$LAB_PW" "$LAB_PW" | keepassxc-cli db-create --set-password vault.kdbx
+Enter password to encrypt database (optional): 
+Repeat password: 
+Successfully created new database.
+
+$ ls -la vault.kdbx
+-rw------- 1 root root 1118 Oct 25 02:18 vault.kdbx
+
+$ echo "$LAB_PW" | keepassxc-cli db-info vault.kdbx
+Enter password to unlock vault.kdbx: 
+UUID: {63e95822-347e-4a37-bfcf-44c3f6139970}
+Name: 
+Description: 
+Cipher: AES 256-bit
+KDF: AES (1000000 rounds)
+Recycle bin is enabled.
+Location: vault.kdbx
+Database created: 25 Oct 2026 02:18:34
+Last saved: 25 Oct 2026 02:18:34
+Unsaved changes: no
+Number of groups: 1
+Number of entries: 0
+Number of expired entries: 0
+Unique passwords: 0
+Non-unique passwords: 0
+Maximum password reuse: 0
+Number of short passwords: 0
+Number of weak passwords: 0
+Entries excluded from reports: 0
+Average password length: 0 characters
+
+$ echo "$LAB_PW" | keepassxc-cli ls vault.kdbx
+Enter password to unlock vault.kdbx: 
+[empty]

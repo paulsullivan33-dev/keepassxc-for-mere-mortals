@@ -1,0 +1,78 @@
+$ keepassxc-cli --version
+2.7.6
+
+# --- Create a database (password piped in, twice) --------------
+$ printf 'demo-master-passphrase\ndemo-master-passphrase\n' \
+    | keepassxc-cli db-create --set-password vault.kdbx
+Successfully created new database.
+
+# With a key file as well (generates it)
+$ keepassxc-cli db-create --set-password \
+    --set-key-file vault-key.key keyvault.kdbx
+
+# Inspect it
+$ keepassxc-cli db-info vault.kdbx
+...
+Cipher: AES 256-bit
+KDF: AES (1000000 rounds)
+
+# --- Groups and entries ------------------------------------------
+$ keepassxc-cli mkdir vault.kdbx Email
+$ keepassxc-cli add vault.kdbx "Email/Example Mail" \
+    -u reader@example.com -p --url https://mail.example.com
+$ keepassxc-cli add vault.kdbx "Finance/Example Bank" \
+    -u saver@example.com -g -L 20 --url https://bank.example.com
+$ keepassxc-cli ls -R vault.kdbx
+$ keepassxc-cli show vault.kdbx "Email/Example Mail"
+Password: <redacted>
+$ keepassxc-cli search vault.kdbx example
+$ keepassxc-cli edit --url https://router.example.com vault.kdbx "Web/Example Router"
+$ keepassxc-cli mv vault.kdbx "Web/Example Router" Finance
+$ keepassxc-cli rm vault.kdbx "Web/Throwaway"
+Successfully recycled entry Throwaway.   # it is in the Recycle Bin now
+
+# --- The password, by name only -----------------------------------
+$ keepassxc-cli show -s -a Password vault.kdbx "Email/Example Mail"
+S3cure!Demo
+$ keepassxc-cli clip vault.kdbx "Email/Example Mail"
+Entry's "Password" attribute copied to the clipboard!
+Clearing the clipboard in 10 seconds...
+
+# --- Generation ----------------------------------------------------
+$ keepassxc-cli generate                 # bare run printed 32 chars
+$ keepassxc-cli generate -L 16 -l -U -n -s
+$ keepassxc-cli generate -L 12 -c abcdef0123456789
+$ keepassxc-cli diceware                 # 7 words, EFF large list
+$ keepassxc-cli diceware -W 4
+
+# --- Judging --------------------------------------------------------
+$ keepassxc-cli estimate hunter2
+Entropy 10.8
+$ keepassxc-cli estimate 'correct horse battery staple'
+Entropy 70.3
+$ keepassxc-cli db-info vault.kdbx       # see the Password statistics block
+$ keepassxc-cli analyze -H hibp-list.txt vault.kdbx
+Password for 'Web/Shared Weak A' has been leaked 9542 times!
+
+# --- Export / import --------------------------------------------------
+$ keepassxc-cli export vault.kdbx > vault-export.xml
+$ keepassxc-cli export -f csv vault.kdbx > vault-export.csv   # PLAINTEXT
+$ keepassxc-cli import -p vault-export.xml imported.kdbx
+$ keepassxc-cli import -p vault-export.csv from-csv.kdbx
+Unable to import XML database: No root group   # the CLI imports XML only
+
+# --- Merge -------------------------------------------------------------
+$ keepassxc-cli merge --same-credentials --dry-run vault.kdbx other.kdbx
+$ keepassxc-cli merge --same-credentials vault.kdbx other.kdbx
+
+# --- Credentials ---------------------------------------------------------
+$ keepassxc-cli ls -k vault-key.key keyvault.kdbx    # key file required
+$ keepassxc-cli db-edit --set-password other.kdbx    # change the password
+
+# --- Attachments -----------------------------------------------------------
+$ keepassxc-cli attachment-import vault.kdbx "Email/Example Mail" \
+    recovery.txt recovery-note.txt
+$ keepassxc-cli show --show-attachments vault.kdbx "Email/Example Mail"
+$ keepassxc-cli attachment-export vault.kdbx "Email/Example Mail" \
+    recovery.txt ./recovery.txt     # a real path; "-" is a filename here
+$ keepassxc-cli attachment-rm vault.kdbx "Email/Example Mail" recovery.txt

@@ -1,0 +1,68 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ echo "$LAB_PW" | keepassxc-cli export -f csv vault.kdbx > vault-export.csv
+Enter password to unlock vault.kdbx: 
+$ cat vault-export.csv
+"Group","Title","Username","Password","URL","Notes","TOTP","Icon","Last Modified","Created"
+"Passwords/Web","Shared Weak A","a@example.com","hunter2","","","","0","2026-10-25T02:19:35Z","2026-10-25T02:19:35Z"
+"Passwords/Web","Shared Weak B","b@example.com","hunter2","","","","0","2026-10-25T02:19:35Z","2026-10-25T02:19:35Z"
+"Passwords/Email","Example Mail","reader@example.com","S3cure!Demo","https://mail.example.com","Demo mailbox entry","","0","2026-10-25T02:18:46Z","2026-10-25T02:18:46Z"
+"Passwords/Finance","Example Bank","saver@example.com","ikjzz24NrKFzUYVAVYMy","https://bank.example.com","","","0","2026-10-25T02:18:46Z","2026-10-25T02:18:46Z"
+"Passwords/Finance","Example Router","admin","router-demo-123","https://router.example.com","","","0","2026-10-25T02:19:22Z","2026-10-25T02:18:47Z"
+"Passwords/Recycle Bin","Throwaway","temp@example.com","temp123","","","","0","2026-10-25T02:19:22Z","2026-10-25T02:19:22Z"
+
+$ echo "$LAB_PW" | keepassxc-cli export -f xml vault.kdbx > vault-export.xml
+Enter password to unlock vault.kdbx: 
+$ head -25 vault-export.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeePassFile>
+	<Meta>
+		<Generator>KeePassXC</Generator>
+		<DatabaseName/>
+		<DatabaseNameChanged>+l1v4g4AAAA=</DatabaseNameChanged>
+		<DatabaseDescription/>
+		<DatabaseDescriptionChanged>+l1v4g4AAAA=</DatabaseDescriptionChanged>
+		<DefaultUserName/>
+		<DefaultUserNameChanged>+l1v4g4AAAA=</DefaultUserNameChanged>
+		<MaintenanceHistoryDays>365</MaintenanceHistoryDays>
+		<Color/>
+		<MasterKeyChanged>+l1v4g4AAAA=</MasterKeyChanged>
+		<MasterKeyChangeRec>-1</MasterKeyChangeRec>
+		<MasterKeyChangeForce>-1</MasterKeyChangeForce>
+		<MemoryProtection>
+			<ProtectTitle>False</ProtectTitle>
+			<ProtectUserName>False</ProtectUserName>
+			<ProtectPassword>True</ProtectPassword>
+			<ProtectURL>False</ProtectURL>
+			<ProtectNotes>False</ProtectNotes>
+		</MemoryProtection>
+		<CustomIcons/>
+		<RecycleBinEnabled>True</RecycleBinEnabled>
+		<RecycleBinUUID>OmIU0FidT1u++djpVoO2cg==</RecycleBinUUID>
+
+$ printf "%s\n%s\n" "$LAB_PW" "$LAB_PW" | keepassxc-cli import -p vault-export.xml imported.kdbx
+Enter password to encrypt database (optional): 
+Repeat password: 
+Successfully imported database.
+
+$ echo "$LAB_PW" | keepassxc-cli ls -Rf imported.kdbx
+Enter password to unlock imported.kdbx: 
+Web/
+Web/Shared Weak A
+Web/Shared Weak B
+Email/
+Email/Example Mail
+Finance/
+Finance/Example Bank
+Finance/Example Router
+Recycle Bin/
+Recycle Bin/Throwaway
+Recycle Bin/Scratch/
+Recycle Bin/Scratch/[empty]
+
+$ printf "%s\n%s\n" "$LAB_PW" "$LAB_PW" | keepassxc-cli import -p vault-export.csv from-csv.kdbx   (does CLI import take CSV?)
+Enter password to encrypt database (optional): 
+Repeat password: 
+Unable to import XML database: No root group
+exit=1
+ls: cannot access 'from-csv.kdbx': No such file or directory

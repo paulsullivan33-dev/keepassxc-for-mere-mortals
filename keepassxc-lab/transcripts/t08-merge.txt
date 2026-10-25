@@ -1,0 +1,37 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+# A second database, as if kept on another machine, with one entry of its own:
+
+$ printf "%s\n%s\n" "$LAB_PW" "$LAB_PW" | keepassxc-cli db-create --set-password other.kdbx
+Enter password to encrypt database (optional): 
+Repeat password: 
+Successfully created new database.
+$ echo "$LAB_PW" | keepassxc-cli add -u traveller@example.com --url https://rail.example.com other.kdbx "Rail Pass" -p   (entry password: rail-demo-456)
+Enter password to unlock other.kdbx: 
+Enter password for new entry: 
+Successfully added entry Rail Pass.
+
+$ echo "$LAB_PW" | keepassxc-cli merge --same-credentials --dry-run vault.kdbx other.kdbx
+Enter password to unlock vault.kdbx: 
+	Creating missing Rail Pass [3a5592ba06ed47658fb73ccf7733878c]
+Database was not modified by merge operation.
+
+$ echo "$LAB_PW" | keepassxc-cli merge --same-credentials vault.kdbx other.kdbx
+Enter password to unlock vault.kdbx: 
+	Creating missing Rail Pass [3a5592ba06ed47658fb73ccf7733878c]
+Successfully merged other.kdbx into vault.kdbx.
+
+$ echo "$LAB_PW" | keepassxc-cli ls -Rf vault.kdbx
+Enter password to unlock vault.kdbx: 
+Rail Pass
+Web/
+Web/Shared Weak A
+Web/Shared Weak B
+Email/
+Email/Example Mail
+Finance/
+Finance/Example Bank
+Finance/Example Router
+Recycle Bin/
+Recycle Bin/Throwaway
+Recycle Bin/Scratch/
+Recycle Bin/Scratch/[empty]

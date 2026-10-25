@@ -1,0 +1,30 @@
+# A small text file, attached to an entry and fetched back:
+$ echo "$LAB_PW" | keepassxc-cli attachment-import vault.kdbx "Email/Example Mail" recovery.txt recovery-note.txt
+Enter password to unlock vault.kdbx: 
+Successfully imported attachment recovery-note.txt as recovery.txt to entry Email/Example Mail.
+
+$ echo "$LAB_PW" | keepassxc-cli show --show-attachments vault.kdbx "Email/Example Mail"
+Enter password to unlock vault.kdbx: 
+Title: Example Mail
+UserName: reader@example.com
+Password: PROTECTED
+URL: https://mail.example.com
+Notes: Demo mailbox entry
+Uuid: {683f293b-6532-423e-9e44-d8a8030cb242}
+Tags: 
+
+Attachments:
+  recovery.txt (43.0 B)
+
+$ echo "$LAB_PW" | keepassxc-cli attachment-export vault.kdbx "Email/Example Mail" recovery.txt -
+Enter password to unlock vault.kdbx: 
+Successfully exported attachment recovery.txt of entry Email/Example Mail to -.
+
+$ echo "$LAB_PW" | keepassxc-cli attachment-rm vault.kdbx "Email/Example Mail" recovery.txt
+Enter password to unlock vault.kdbx: 
+Successfully removed attachment recovery.txt from entry Email/Example Mail.
+
+# Note the "-" in that export: it is not a stdout convention here. The command
+# created a file literally named "-" in the working directory, containing:
+#   Recovery code (fictional): PLUM-OTTER-4721
+# Give attachment-export a real path. The stray "-" file was deleted after the lab.

@@ -1,0 +1,45 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ echo "$LAB_PW" | keepassxc-cli show vault.kdbx "Email/Example Mail"
+Enter password to unlock vault.kdbx: 
+Title: Example Mail
+UserName: reader@example.com
+Password: PROTECTED
+URL: https://mail.example.com
+Notes: Demo mailbox entry
+Uuid: {683f293b-6532-423e-9e44-d8a8030cb242}
+Tags: 
+
+$ echo "$LAB_PW" | keepassxc-cli show -s vault.kdbx "Email/Example Mail"   (-s reveals protected fields)
+Enter password to unlock vault.kdbx: 
+Title: Example Mail
+UserName: reader@example.com
+Password: S3cure!Demo
+URL: https://mail.example.com
+Notes: Demo mailbox entry
+Uuid: {683f293b-6532-423e-9e44-d8a8030cb242}
+Tags: 
+
+$ echo "$LAB_PW" | keepassxc-cli show -s vault.kdbx "Finance/Example Bank"   (the generated password, revealed)
+Enter password to unlock vault.kdbx: 
+Title: Example Bank
+UserName: saver@example.com
+Password: ikjzz24NrKFzUYVAVYMy
+URL: https://bank.example.com
+Notes: 
+Uuid: {1a986663-b89b-4296-afb3-1dc9a3b9676d}
+Tags: 
+
+$ echo "$LAB_PW" | keepassxc-cli show -a UserName vault.kdbx "Email/Example Mail"
+Enter password to unlock vault.kdbx: 
+reader@example.com
+
+$ echo "$LAB_PW" | keepassxc-cli search vault.kdbx example
+Enter password to unlock vault.kdbx: 
+/Web/Example Router
+/Email/Example Mail
+/Finance/Example Bank
+
+$ echo "$LAB_PW" | keepassxc-cli search vault.kdbx bank
+Enter password to unlock vault.kdbx: 
+/Finance/Example Bank

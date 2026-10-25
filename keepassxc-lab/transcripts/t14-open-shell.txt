@@ -1,0 +1,4 @@
+# The interactive shell: unlock once, work, close.
+$ printf "%s\nls\nshow Email/Example Mail\nclose\n" "$LAB_PW" | keepassxc-cli open vault.kdbx
+Enter password to unlock vault.kdbx: 
+vault.kdbx> 

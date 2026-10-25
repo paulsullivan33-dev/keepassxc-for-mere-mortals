@@ -1,0 +1,9 @@
+# Craft a two-line HIBP-format file containing the SHA-1 of "hunter2" and of "password":
+$ printf "%s\n%s\n" "$(printf hunter2 | sha1sum | cut -d" " -f1 | tr a-f A-F)" "$(printf password | sha1sum | cut -d" " -f1 | tr a-f A-F)" > hibp-mini.txt
+F3BBBD66A63D4BF1747940578EC3D0103530E21D
+5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8
+
+$ echo "$LAB_PW" | keepassxc-cli analyze -H hibp-mini.txt vault.kdbx
+Enter password to unlock vault.kdbx: 
+Evaluating database entries against HIBP file, this will take a while…
+HIBP file, line 1: parse error

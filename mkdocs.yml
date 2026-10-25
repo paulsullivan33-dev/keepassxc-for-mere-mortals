@@ -1,0 +1,30 @@
+site_name: KeePassXC for Mere Mortals
+site_description: Your passwords in one encrypted file on a machine of your own. Creating a database, filling it with entries, generating passwords and passphrases worth using, judging the weak ones, key files, the command line, merging copies that drifted apart, and the limits stated plainly.
+site_url: https://paulsullivan33-dev.github.io/keepassxc-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What KeePassXC Is: what-keepassxc-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing KeePassXC: installing-keepassxc.md
+  - Your First Database: your-first-database.md
+  - Entries, Groups and Search: entries-groups-and-search.md
+  - The Password Generator: the-password-generator.md
+  - Judging Passwords: judging-passwords.md
+  - Keys Beyond the Password: keys-beyond-the-password.md
+  - The Command Line: the-command-line.md
+  - Import and Export: import-and-export.md
+  - One File, Many Machines: one-file-many-machines.md
+  - Auto-Type and Browsers: autotype-and-browsers.md
+  - Backup and Recovery: backup-and-recovery.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

@@ -1,0 +1,18 @@
+# Which KDBX format does the CLI write? Read bytes 8-11 of each fixture
+# (little-endian version: 01 00 03 00 = KDBX 3.1, 01 00 04 00 = KDBX 4.1).
+
+$ for f in vault.kdbx keyvault.kdbx imported.kdbx other.kdbx; do od -A n -t x1 -N 12 $f; done
+vault.kdbx:    03 d9 a2 9a 67 fb 4b b5 01 00 04 00   -> KDBX 4.1
+keyvault.kdbx: 03 d9 a2 9a 67 fb 4b b5 01 00 03 00   -> KDBX 3.1
+imported.kdbx: 03 d9 a2 9a 67 fb 4b b5 01 00 04 00   -> KDBX 4.1 (import writes 4.1)
+other.kdbx:    03 d9 a2 9a 67 fb 4b b5 01 00 03 00   -> KDBX 3.1
+
+# A fresh CLI db-create, never touched by anything else, is KDBX 3.1: 01 00 03 00.
+# Bisecting what upgraded vault.kdbx (create -> mkdir -> add -> rm -> merge):
+after create:        version bytes: 01 00 03 00
+after mkdir+add:     version bytes: 01 00 03 00
+after rm (recycle):  version bytes: 01 00 04 00
+after merge:         version bytes: 01 00 04 00
+
+# So the first recycle of an entry is what rewrote the file as KDBX 4.1;
+# db-info (t01) reports either format the same way: Cipher AES 256-bit, KDF AES (1000000 rounds).

@@ -1,0 +1,23 @@
+$ keepassxc-cli generate   (defaults)
+aPttdkYdtsiCwtNM73bnrehJusspVXYW
+
+$ keepassxc-cli generate -L 20
+tzguwSqTZRtHdaSUN4qP
+
+$ keepassxc-cli generate -L 16 -l -U -n -s   (letters, digits, specials)
+F,"5T['Fwn<`x-3"
+
+$ keepassxc-cli generate -L 16 -l -U -n --exclude-similar
+cvijTxRfEXec2Nmj
+
+$ keepassxc-cli generate -L 12 -c abcdef0123456789   (custom set: hex)
+05537d0f5258
+
+$ keepassxc-cli diceware   (default word count)
+repaying abroad falcon chunk protozoan broom shell
+
+$ keepassxc-cli diceware -W 6
+pointy roman oblivion campfire stimuli carnival
+
+$ keepassxc-cli diceware -W 4
+emit acid ancient degrading

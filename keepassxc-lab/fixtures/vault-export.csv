@@ -1,0 +1,7 @@
+"Group","Title","Username","Password","URL","Notes","TOTP","Icon","Last Modified","Created"
+"Passwords/Web","Shared Weak A","a@example.com","hunter2","","","","0","2026-10-25T02:19:35Z","2026-10-25T02:19:35Z"
+"Passwords/Web","Shared Weak B","b@example.com","hunter2","","","","0","2026-10-25T02:19:35Z","2026-10-25T02:19:35Z"
+"Passwords/Email","Example Mail","reader@example.com","S3cure!Demo","https://mail.example.com","Demo mailbox entry","","0","2026-10-25T02:18:46Z","2026-10-25T02:18:46Z"
+"Passwords/Finance","Example Bank","saver@example.com","ikjzz24NrKFzUYVAVYMy","https://bank.example.com","","","0","2026-10-25T02:18:46Z","2026-10-25T02:18:46Z"
+"Passwords/Finance","Example Router","admin","router-demo-123","https://router.example.com","","","0","2026-10-25T02:19:22Z","2026-10-25T02:18:47Z"
+"Passwords/Recycle Bin","Throwaway","temp@example.com","temp123","","","","0","2026-10-25T02:19:22Z","2026-10-25T02:19:22Z"

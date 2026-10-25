@@ -1,0 +1,72 @@
+KeePassXC for Mere Mortals — lab notes
+======================================
+
+Machine: 2 CPUs, 7.7 GB RAM sandbox VM.
+OS: Ubuntu 24.04. KeePassXC 2.7.6,
+installed from the distribution package
+(2.7.6+dfsg.1-1build3) with apt; xclip
+installed alongside for the clipboard
+test. The GUI ran under Xvfb (a virtual
+display, 1280x900), driven with xdotool
+and photographed with ImageMagick's
+`import`. No network vault, no browser,
+no hardware key was available to the lab.
+
+Fixtures: one main database (vault.kdbx),
+a second for merging (other.kdbx), one
+guarded by a key file (keyvault.kdbx +
+vault-key.key), the XML import of the
+main database's own export
+(imported.kdbx), CSV and XML exports, and
+a two-line HIBP stand-in (hibp-mini.txt).
+All accounts are invented
+(reader@example.com and friends). The
+master password, demo-master-passphrase,
+is published on purpose; the databases
+are in keepassxc-lab/fixtures/ and every
+step is transcribed in
+keepassxc-lab/transcripts/ (t00-t90).
+
+Headline measurements (all the program's
+own output):
+
+  - db-info on a CLI-created database:
+    AES 256-bit cipher, AES KDF at
+    1,000,000 rounds, recycle bin on.
+  - show redacts the password even with
+    -s and --all; show -s -a Password
+    prints it, alone.
+  - estimate (zxcvbn): hunter2 10.8 bits;
+    a leetspeak word 30.8; "correct
+    horse battery staple" 70.3; a
+    generated 20-char password 102.2.
+  - db-info statistics caught the lab's
+    planted reuse: 4 unique of 5,
+    max reuse 2, 4 weak.
+  - analyze needs its list in SHA1:count
+    form; fed a two-line fixture it
+    flagged both planted entries.
+  - The CLI imports XML only; the CSV
+    attempt failed with "Unable to import
+    XML database: No root group".
+  - KDBX header bytes: CLI db-create
+    writes 3.1; import writes 4.1; a 3.1
+    file became 4.1 at its first recycle.
+  - clip under the virtual display: the
+    password was on the X clipboard when
+    checked, and gone after the countdown.
+  - GUI generator readouts: a
+    20-character password at 125.72 bits;
+    a 7-word EFF-list passphrase at
+    90.47 bits (about 12.9 bits per word,
+    matching the list's 7,776 size).
+
+Not done, and labelled documented-only
+in the guide: creating a database and
+importing CSV through the window's
+wizards (menus opened and read, wizards
+not clicked through); Auto-Type into
+another application; browser integration;
+hardware keys; TOTP; database reports
+screens; Windows/macOS installs; Argon2
+settings.

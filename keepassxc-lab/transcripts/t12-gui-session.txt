@@ -1,0 +1,25 @@
+# GUI session, run for real under Xvfb (virtual display :99, 1280x900),
+# driven with xdotool, captured with ImageMagick import. Screenshots in ../screenshots/.
+
+$ Xvfb :99 -screen 0 1280x900x24 &
+$ DISPLAY=:99 keepassxc fixtures/vault.kdbx &
+# -> unlock screen appears (gui-unlock.png): menu bar (Database, Entries, Groups,
+#    Tools, View, Help), toolbar, "Unlock KeePassXC Database" panel with the
+#    password field focused, plus Key File and Hardware Key fields.
+
+$ DISPLAY=:99 xdotool type demo-master-passphrase; xdotool key Return
+# -> main window (gui-main-window.png): group tree on the left (root group
+#    "Passwords" holding Web, Email, Finance, Recycle Bin; "Searches and Tags"
+#    below it: All Entries, Expired, Weak Passwords), entry list centre-top,
+#    entry preview below with General / Advanced / Autotype tabs, masked password.
+
+# Tools menu -> Password Generator (gui-generator.png): a generated 20-char
+# password, "Password Quality: Excellent", "Entropy: 125.72 bit", Password and
+# Passphrase tabs, character-type toggles (A-Z, a-z, 0-9, specials on).
+# Passphrase tab (gui-generator-passphrase.png): 7 words from the EFF large
+# wordlist, "Entropy: 90.47 bit", word-count slider, separator and case controls.
+
+# Database menu opened and read: New/Open/Save/Save Backup/Close, Lock (Ctrl+L),
+# Database Reports, Database Settings, Database Security, Merge From Database,
+# Import and Export submenus. Export offers CSV File, HTML File, XML File.
+# The Import submenu exists; its CSV wizard was NOT clicked through to completion.

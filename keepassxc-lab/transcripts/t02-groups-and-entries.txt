@@ -1,0 +1,36 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ echo "$LAB_PW" | keepassxc-cli mkdir vault.kdbx Web
+Enter password to unlock vault.kdbx: 
+Successfully added group Web.
+
+$ echo "$LAB_PW" | keepassxc-cli mkdir vault.kdbx Email
+Enter password to unlock vault.kdbx: 
+Successfully added group Email.
+
+$ echo "$LAB_PW" | keepassxc-cli mkdir vault.kdbx Finance
+Enter password to unlock vault.kdbx: 
+Successfully added group Finance.
+
+$ echo "$LAB_PW" | keepassxc-cli add -u reader@example.com --url https://mail.example.com --notes "Demo mailbox entry" vault.kdbx "Email/Example Mail" -p   (entry password typed at the prompt: S3cure!Demo)
+Enter password to unlock vault.kdbx: 
+Enter password for new entry: 
+Successfully added entry Example Mail.
+
+$ echo "$LAB_PW" | keepassxc-cli add -u saver@example.com --url https://bank.example.com vault.kdbx "Finance/Example Bank" -g -L 20   (password generated)
+Enter password to unlock vault.kdbx: 
+Successfully added entry Example Bank.
+
+$ echo "$LAB_PW" | keepassxc-cli add -u admin --url http://192.0.2.1 vault.kdbx "Web/Example Router" -p   (entry password: router-demo-123)
+Enter password to unlock vault.kdbx: 
+Enter password for new entry: 
+Successfully added entry Example Router.
+
+$ echo "$LAB_PW" | keepassxc-cli ls -R vault.kdbx
+Enter password to unlock vault.kdbx: 
+Web/
+  Example Router
+Email/
+  Example Mail
+Finance/
+  Example Bank

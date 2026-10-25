@@ -1,0 +1,46 @@
+$ keepassxc-cli estimate hunter2
+Length 7	Entropy 10.814	Log10 3.255
+
+$ keepassxc-cli estimate S3cure!Demo
+Length 11	Entropy 30.845	Log10 9.285
+
+$ keepassxc-cli estimate "correct horse battery staple"
+Length 28	Entropy 70.329	Log10 21.171
+
+$ keepassxc-cli estimate -a ikjzz24NrKFzUYVAVYMy   (advanced, on the password generated in t02)
+Length 20	Entropy 102.243	Log10 30.778
+  Multi-word extra bits 8.0
+  Type: Spatial          Length 3	Entropy 12.239 (3.68)	ikj
+  Type: Repeated         Length 2	Entropy  5.700 (1.72)	zz
+  Type: Bruteforce       Length 1	Entropy  5.954 (1.79)	2
+  Type: Dict+Leet        Length 2	Entropy  6.000 (1.81)	4N
+  Type: Bruteforce       Length 10	Entropy 59.542 (17.92)	rKFzUYVAVY
+  Type: Dictionary       Length 2	Entropy  4.807 (1.45)	My
+
+# Seed two entries that share one weak password, so analyze has something to find:
+$ ... add -u a@example.com vault.kdbx "Web/Shared Weak A" -p   (entry password: hunter2)
+Enter password to unlock vault.kdbx: 
+Enter password for new entry: 
+Successfully added entry Shared Weak A.
+$ ... add -u b@example.com vault.kdbx "Web/Shared Weak B" -p   (entry password: hunter2)
+Enter password to unlock vault.kdbx: 
+Enter password for new entry: 
+Successfully added entry Shared Weak B.
+
+$ echo "$LAB_PW" | keepassxc-cli analyze vault.kdbx
+Enter password to unlock vault.kdbx: 
+Cannot find HIBP file: 
+$ echo "$LAB_PW" | keepassxc-cli db-info vault.kdbx | tail -12
+Enter password to unlock vault.kdbx: 
+Last saved: 25 Oct 2026 02:19:35
+Unsaved changes: no
+Number of groups: 5
+Number of entries: 5
+Number of expired entries: 0
+Unique passwords: 4
+Non-unique passwords: 1
+Maximum password reuse: 2
+Number of short passwords: 2
+Number of weak passwords: 4
+Entries excluded from reports: 0
+Average password length: 12 characters

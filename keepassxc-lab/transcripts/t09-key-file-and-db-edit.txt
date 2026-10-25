@@ -1,0 +1,36 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ printf "%s\n%s\n" "$LAB_PW" "$LAB_PW" | keepassxc-cli db-create --set-password --set-key-file vault-key.key keyvault.kdbx
+Enter password to encrypt database (optional): 
+Repeat password: 
+Successfully created new database.
+$ ls -la vault-key.key keyvault.kdbx; head -c 300 vault-key.key
+-rw------- 1 root root 1118 Oct 25 02:20 keyvault.kdbx
+-r-------- 1 root root  128 Oct 25 02:20 vault-key.key
+"Gz¥$kì§T[°¹Ž-¸ÒS§<¹ûZmÜü¶é)û–Ùþg¶ÙN®]/Ì¨wQRÿxzSÙÛDØ(ž%í\ƒß››üImÕ½Nq9ã@QdLŠ'Œüüíªçi3 Õt¹:²Ç½kÄqg2À%ÛÀl‹%ñN‘ü¿jà
+
+$ echo "$LAB_PW" | keepassxc-cli ls keyvault.kdbx   (right password, NO key file)
+Enter password to unlock keyvault.kdbx: 
+Error while reading the database: Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.
+exit=1
+
+$ echo "$LAB_PW" | keepassxc-cli ls -k vault-key.key keyvault.kdbx   (password + key file)
+Enter password to unlock keyvault.kdbx: 
+[empty]
+
+# Change the master password of other.kdbx with db-edit:
+$ printf "%s\n%s\n%s\n" "$LAB_PW" "new-lab-passphrase" "new-lab-passphrase" | keepassxc-cli db-edit --set-password other.kdbx
+Enter password to unlock other.kdbx: 
+Enter password to encrypt database (optional): 
+Repeat password: 
+Successfully edited the database.
+
+$ echo "$LAB_PW" | keepassxc-cli ls other.kdbx   (old password now fails)
+Enter password to unlock other.kdbx: 
+Error while reading the database: Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.
+exit=1
+$ echo "new-lab-passphrase" | keepassxc-cli ls other.kdbx   (new password works)
+Enter password to unlock other.kdbx: 
+Rail Pass

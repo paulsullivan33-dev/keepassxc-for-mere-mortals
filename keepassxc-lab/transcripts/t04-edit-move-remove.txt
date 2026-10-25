@@ -1,0 +1,53 @@
+# Lab fixture password (published on purpose): LAB_PW=demo-master-passphrase
+
+$ echo "$LAB_PW" | keepassxc-cli edit --url https://router.example.com vault.kdbx "Web/Example Router"
+Enter password to unlock vault.kdbx: 
+Successfully edited entry Example Router.
+
+$ echo "$LAB_PW" | keepassxc-cli mv vault.kdbx "Web/Example Router" Finance
+Enter password to unlock vault.kdbx: 
+Successfully moved entry Example Router to group Finance.
+
+$ echo "$LAB_PW" | keepassxc-cli add -u temp@example.com vault.kdbx "Web/Throwaway" -p   (entry password: temp123)
+Enter password to unlock vault.kdbx: 
+Enter password for new entry: 
+Successfully added entry Throwaway.
+
+$ echo "$LAB_PW" | keepassxc-cli rm vault.kdbx "Web/Throwaway"
+Enter password to unlock vault.kdbx: 
+Successfully recycled entry Throwaway.
+
+$ echo "$LAB_PW" | keepassxc-cli mkdir vault.kdbx Scratch
+Enter password to unlock vault.kdbx: 
+Successfully added group Scratch.
+$ echo "$LAB_PW" | keepassxc-cli rmdir vault.kdbx Scratch
+Enter password to unlock vault.kdbx: 
+Successfully recycled group Scratch.
+
+$ echo "$LAB_PW" | keepassxc-cli ls -R vault.kdbx
+Enter password to unlock vault.kdbx: 
+Web/
+  [empty]
+Email/
+  Example Mail
+Finance/
+  Example Bank
+  Example Router
+Recycle Bin/
+  Throwaway
+  Scratch/
+    [empty]
+
+$ echo "$LAB_PW" | keepassxc-cli ls vault.kdbx Recycle\ Bin 2>/dev/null || echo "$LAB_PW" | keepassxc-cli ls -Rf vault.kdbx
+Enter password to unlock vault.kdbx: 
+Web/
+Web/[empty]
+Email/
+Email/Example Mail
+Finance/
+Finance/Example Bank
+Finance/Example Router
+Recycle Bin/
+Recycle Bin/Throwaway
+Recycle Bin/Scratch/
+Recycle Bin/Scratch/[empty]

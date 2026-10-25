@@ -1,0 +1,10 @@
+$ (DISPLAY=:99) echo "$LAB_PW" | keepassxc-cli clip vault.kdbx "Email/Example Mail" &
+$ sleep 2; DISPLAY=:99 xclip -o -selection clipboard
+$ sleep 12; DISPLAY=:99 xclip -o -selection clipboard   (after the clear delay)
+Enter password to unlock vault.kdbx: 
+Entry's "Password" attribute copied to the clipboard!
+Clearing the clipboard in 10 seconds...                                       Clearing the clipboard in 9 seconds...                                      Clearing the clipboard in 8 seconds...--- clipboard at +3s:
+S3cure!Demo
+                                      Clearing the clipboard in 7 seconds...                                      Clearing the clipboard in 6 seconds...                                      Clearing the clipboard in 5 seconds...                                      Clearing the clipboard in 4 seconds...                                      Clearing the clipboard in 3 seconds...                                      Clearing the clipboard in 2 seconds...                                      Clearing the clipboard in 1 second...                                     Clipboard cleared!
+--- clipboard at +15s (clip default clears after 10s):
+(empty above = cleared)

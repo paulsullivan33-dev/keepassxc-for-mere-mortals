@@ -1,0 +1,10 @@
+# HIBP lines need the count suffix (HASH:count). Rebuild and rerun:
+$ printf "%s:9542\n%s:10673035\n" <sha1-of-hunter2> <sha1-of-password> > hibp-mini.txt
+F3BBBD66A63D4BF1747940578EC3D0103530E21D:9542
+5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8:10673035
+
+$ echo "$LAB_PW" | keepassxc-cli analyze -H hibp-mini.txt vault.kdbx
+Enter password to unlock vault.kdbx: 
+Evaluating database entries against HIBP file, this will take a while…
+Password for 'Web/Shared Weak B' has been leaked 9542 times!
+Password for 'Web/Shared Weak A' has been leaked 9542 times!
