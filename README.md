@@ -152,3 +152,19 @@ what was actually run when it matters; the
 [criteria](criteria.md) page carries the
 full verification ledger, transcripts
 included.
+
+---
+
+## Part of the series
+
+This guide is one of the [For Mere Mortals](https://paulsullivan33-dev.github.io/mere-mortals/) guides: plain-language guides to the tools programmers and makers use.
+
+Related guides:
+
+- [Vaultwarden for Mere Mortals](https://paulsullivan33-dev.github.io/vaultwarden-for-mere-mortals/)
+- [Cybersecurity for Mere Mortals](https://paulsullivan33-dev.github.io/cybersecurity-for-mere-mortals/)
+- [Chezmoi for Mere Mortals](https://paulsullivan33-dev.github.io/chezmoi-for-mere-mortals/)
+
+## License
+
+The writing in this guide is licensed under [CC BY 4.0](https://github.com/paulsullivan33-dev/keepassxc-for-mere-mortals/blob/main/LICENSE). Code examples and lab scripts are licensed under the [MIT License](https://github.com/paulsullivan33-dev/keepassxc-for-mere-mortals/blob/main/LICENSE-CODE).
